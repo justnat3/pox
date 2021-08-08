@@ -28,7 +28,7 @@ def pr_err(err: str) -> None:
         err = str(err)
 
     # print the err in a red string context
-    print(f"{\033[31m{err}\033[0m}")
+    print(f"{\033[31m{err}\033[0m")
 
     # exit the program once we have reached an error (for now)
     sys.exit(1)
