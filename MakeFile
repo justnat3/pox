@@ -1,0 +1,5 @@
+all:
+	python setup.py
+
+clean:
+	echo "reeee"
