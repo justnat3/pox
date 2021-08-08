@@ -23,5 +23,3 @@ class Lexer:
 
     def addToken() -> None:
         ...
-
-    def 

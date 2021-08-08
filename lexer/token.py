@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from Enum import Enum
+from enum import Enum
 
 class TokenType(Enum):
     LEFT_PARAM = 1,
@@ -24,7 +24,7 @@ class TokenType(Enum):
     STRING = 15,
     NUMBER = 16,
     AND = 17,
-    OR = 18,
+    _OR = 18,
     CLASS = 19,
     ELSE = 20,
     FALSE = 21,

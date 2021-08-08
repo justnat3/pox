@@ -9,6 +9,7 @@
 #                                                        #
 ##########################################################
 
+__version__ = "0.1.0"
 # std defined imports
 from dataclasses import dataclass
 import sys
@@ -24,7 +25,7 @@ class TokenList: ...
 def pr_err(err: str) -> None:
     
     # make sure that what we are sticking in is a string
-    if not isInstance(err, str):
+    if not isinstance(err, str):
         err = str(err)
 
     # print the err in a red string context
@@ -40,14 +41,25 @@ class Path:
     path: str
 
     def __post_init__(self):
-        # Check to see if the path exists
-        assert not os.path.isDir(self.path)
 
-        # make sure we are not following symlinks
-        assert not os.path.isLink(self.path)
+        try:
+            if not self.path.__contains__(".pookipy"):
+                pr_err("not a pookipy file")
 
-        # make sure that the path exists
-        assert os.path.exists(self.path)
+            # Check to see if the path exists
+            assert not os.path.isDir(self.path)
+
+            # make sure we are not following symlinks
+            assert not os.path.isLink(self.path)
+
+            # make sure that the path exists
+            assert os.path.exists(self.path)
+
+        except AssertionError:
+            # print an err & example how to use the program
+            pr_err("Either no arguemnts, or what you passed in was not a path")
+            print("[Usage]: pookipy <script>")
+
 
     # handle cast to string
     def __str__(self):
@@ -55,10 +67,10 @@ class Path:
 
 
 # run the program
-def run(file: str) -> list:
+def run_file(file: str) -> list:
 
     # ensuer path safety
-    s_file = str( Path(file) ) 
+    s_file = str( Path( os.path.abspath(file) ) ) 
 
     # initialize the lexer
     lex = Lexer(s_file)
@@ -66,17 +78,29 @@ def run(file: str) -> list:
     # run the lexer
     tokens = lex.run_lexer()
 
+
+def run(line: str) -> str:
+    print(line)
+
+
 def run_prompt():
-    raise NotImplemeneted
+    try:
+        print(f"\nPookiPy Version: {__version__}")
+        while 1:
+            line = input("> ")
+            if line is None:
+                break
+            run(line)
+    except KeyboardInterrupt:
+        print("\n> Exiting...\n")
+        sys.exit(0)
 
 
 # entry point
 def main() -> int:
 
     if len(sys.argv) > 1:
-        # print an err & example how to use the program
-        pr_err("Either no arguemnts, or what you passed in was not a path")
-        print("[Usage]: pookipy <script>")
+        run(sys.argv[1])
     else:
         run_prompt()
 
