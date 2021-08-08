@@ -80,17 +80,38 @@ def run_file(file: str) -> list:
 
 
 def run(line: str) -> str:
-    print(line)
 
+    # handle empty input
+    if not line == "":
+        print(line)
+
+    # ensuer path safety
+    s_file = str( Path( os.path.abspath(file) ) ) 
+
+    # initialize the lexer
+    lex = Lexer(s_file)
+
+    # run the lexer
+    tokens = lex.run_lexer()
 
 def run_prompt():
+    # try to catch keyboard interrupts
     try:
+        
         print(f"\nPookiPy Version: {__version__}")
+
         while 1:
+            # Take user input
             line = input("> ")
-            if line is None:
-                break
+
+            # exit with exit()
+            if line == "exit()":
+                print("> Exiting...\n")
+                sys.exit(0)
+
+            # lex (for now) the input
             run(line)
+
     except KeyboardInterrupt:
         print("\n> Exiting...\n")
         sys.exit(0)

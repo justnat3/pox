@@ -2,45 +2,87 @@ from dataclasses import dataclass
 from enum import Enum
 
 class TokenType(Enum):
-    LEFT_PARAM = 1,
-    RIGHT_PARAM = 2,
-    LEFT_BRACE = 3,
-    RIGHT_BRACE = 4,
-    COMMA = 5,
-    DOT = 6,
-    MINUX = 7,
-    PLUS = 8,
-    SEMICOLON = 9,
-    SLASH = 10,
-    START = 11
-    BANG = 12,
-    BANG_EQUAL = 13,
-    EQUAL = 14,
-    EQUAL_EQUAL = 15,
+
+    # somethings
+
+    # (
+    LEFT_PARAN = 40,
+    # )
+    RIGHT_PARAN = 41,
+    # [
+    LEFT_BRACKET= 91,
+    # ]
+    RIGHT_BRACKET= 93,
+    # {
+    LEFT_BRACE = 123,
+    # }
+    RIGHT_BRACE = 125,
+    # ,
+    COMMA = 44,
+    # \
+    BSLASH = 92,
+    # .
+    STOP = 46,
+
+    # Operators
+
+    # -
+    MINUS = 45,
+    # +
+    PLUS = 43,
+    # ;
+    SEMICOLON = 59,
+    # /
+    FSLASH = 47,
+    # *
+    STAR = 42,
+    # !
+    BANG = 33,
+    # !=
+    BANG_EQUAL = 3361,
+    # =
+    EQUAL = 61,
+    # ==
+    EQUAL_EQUAL = 6161,
+    # >
     GREATER = 16,
-    GREATER_EQUAL = 17,
-    LESS = 13,
+    # >=
+    GREATER_EQUAL = 6261,
+    # <
+    LESS = 60,
+    # <=
+    LESSER_EQAL = 6061,
+
+    # blanket
     IDENTIFER = 14,
-    STRING = 15,
-    NUMBER = 16,
-    AND = 17,
-    _OR = 18,
-    CLASS = 19,
-    ELSE = 20,
+
+    # Data Types
+
+    # ""
+    STRING = 56503,
+    # 0,1,2,3,4,5, etc
+    NUMBER = 979814,
+    # booleans
     FALSE = 21,
     TRUE = 22,
-    FUNCTION = 23,
-    FOR = 24,
-    IF = 25,
-    NIL = 26,
-    OR = 27,
-    PRINT = 28,
-    RETURN = 29,
-    SUPER = 30,
-    THIS = 31,
-    LET = 32,
-    WHILE = 33,
-    EOF = 34,
+    
+    # Keywords / Reserved Words
+    AND = 700,
+    _OR = 994,
+    CLASS = 98755,
+    FUNCTION = 279651,
+    FOR = 214,
+    NIL = 958,
+    ELSE = 1851,
+    IF = 952,
+    PRINT = 24506,
+    RETURN = 41674,
+    SUPER = 57214,
+    THIS = 6455,
+    LET = 816,
+    WHILE = 94581,
+
+    EOF = 9112,
 
 
 @dataclass(init=True, frozen=True)
