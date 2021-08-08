@@ -85,6 +85,7 @@ class TokenType(Enum):
     EOF = 9112,
 
 
+
 @dataclass(init=True, frozen=True)
 class Token:
     type: str
