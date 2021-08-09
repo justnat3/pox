@@ -55,7 +55,6 @@ class Lexer:
         while self.at_end() is False:
             # advance our position in the buffer, and get the next character
             c: str = self.advance()
-            print(self.line)
 
             if c == "\n":
                 self.line += 1
@@ -107,7 +106,7 @@ class Lexer:
                 continue
 
             if c == ";":
-                self.add_token(TokenType.SEMICOLON, ";", self.line)
+                self.add_token(TokenType.SEMICOLON, ";", self.line, None)
                 continue
 
             if c == "/":
