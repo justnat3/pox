@@ -48,7 +48,7 @@ class TokenType(Enum):
     # >=
     GREATER_EQUAL = 6261,
     # <
-    LESS = 60,
+    LESSER = 60,
     # <=
     LESSER_EQAL = 6061,
 
@@ -87,9 +87,9 @@ class TokenType(Enum):
 
 @dataclass(init=True, frozen=True)
 class Token:
-    type: str
+    _type: str
     lexeme: str
-    literal: object
+    literal: object = field(default = None)
     line: int
 
     def __str__(self):
