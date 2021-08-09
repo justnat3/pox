@@ -16,24 +16,15 @@ import sys
 import os
 
 # program defined imports
+from utils.utils import pr_err
 from lexer.token import Token
 from lexer.lexer import Lexer
 
 class TokenList: ...
 
-# Handling Error strings
-def pr_err(err: str) -> None:
-    
-    # make sure that what we are sticking in is a string
-    if not isinstance(err, str):
-        err = str(err)
-
-    # print the err in a red string context
-    print(f"\033[31m{err}\033[0m")
-
-    # exit the program once we have reached an error (for now)
-    sys.exit(1)
-
+def create_source_buffer(s_file: str) -> str:
+    with open(s_file, 'r') as s_fd:
+        return s_fd.read()
 
 # safe immuatable path type
 @dataclass(frozen=True, init=True)
@@ -72,11 +63,11 @@ def run_file(file: str) -> list:
     # ensuer path safety
     s_file = str( Path( os.path.abspath(file) ) ) 
 
-    # initialize the lexer
-    lex = Lexer(s_file)
+    # intialize our file buffer
+    s_buff = create_source_buffer(s_file)
 
-    # run the lexer
-    tokens = lex.run_lexer()
+    # initialize the lexer
+    lex = Lexer(s_buff)
 
 
 def run(line: str) -> str:
@@ -92,13 +83,18 @@ def run(line: str) -> str:
     lex = Lexer(s_file)
 
     # run the lexer
-    tokens = lex.run_lexer()
+    ret = lex.run_lexer()
+
+    if lex.had_error():
+        pr_err("had error during execution")
+        sys.exit(65)
+
 
 def run_prompt():
     # try to catch keyboard interrupts
     try:
         
-        print(f"\nPookiPy Version: {__version__}")
+        print(f"\npookipy Version: {__version__}")
 
         while 1:
             # Take user input
@@ -121,8 +117,10 @@ def run_prompt():
 def main() -> int:
 
     if len(sys.argv) > 1:
-        run(sys.argv[1])
+        # run the interprreter with a file buffer
+        run_file(sys.argv[1])
     else:
+        # run the interpretter as a REPL
         run_prompt()
 
 if __name__ == "__main__":

@@ -4,7 +4,6 @@ from enum import Enum
 class TokenType(Enum):
 
     # somethings
-
     # (
     LEFT_PARAN = 40,
     # )
@@ -90,7 +89,7 @@ class TokenType(Enum):
 class Token:
     type: str
     lexeme: str
-    literal: str
+    literal: object
     line: int
 
     def __str__(self):
