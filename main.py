@@ -69,6 +69,8 @@ def run_file(file: str) -> list:
     # initialize the lexer
     lex = Lexer(s_buff)
 
+    lex.run_lexer()
+
 
 def run(line: str) -> str:
 
@@ -76,18 +78,11 @@ def run(line: str) -> str:
     if not line == "":
         print(line)
 
-    # ensuer path safety
-    s_file = str( Path( os.path.abspath(file) ) ) 
+    lex = Lexer(line)
 
-    # initialize the lexer
-    lex = Lexer(s_file)
-
-    # run the lexer
-    ret = lex.run_lexer()
-
-    if lex.had_error():
-        pr_err("had error during execution")
-        sys.exit(65)
+    lex.run_lexer()
+    for token in lex.tokens:
+        print(token)
 
 
 def run_prompt():

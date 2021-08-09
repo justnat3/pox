@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import Enum
 
 class TokenType(Enum):
@@ -89,8 +89,8 @@ class TokenType(Enum):
 class Token:
     _type: str
     lexeme: str
-    literal: object = field(default = None)
     line: int
+    literal: object = field(default = None)
 
     def __str__(self):
-        return f"{self.type} : {self.lexeme} : {literal}"
+        return f"[ {self.line} ] {self._type} : {self.lexeme} :" 

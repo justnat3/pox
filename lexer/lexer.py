@@ -1,6 +1,6 @@
-from dataclasses import dataclass
-from ..utils.utils import pr_err
-from .token import Token
+from dataclasses import dataclass, field
+from utils.utils import pr_err
+from .token import Token, TokenType
 
 # for type annotation
 class Error: ...
@@ -29,30 +29,33 @@ class Lexer:
 
     # initalize default values for dataclass fields
     def __post_init__(self):
-        self.current_position = 0
+        self.current_position = -1
         self.current_char = None
         self.tokens = []
         self.line = 0
 
+    def run_lexer(self) -> None:
+        self.scan_tokens()
 
     def advance(self) -> str:
         # advance the lexer cursor
         self.current_position += 1
 
         # return the next char
-        return buffer[current_position]
+        return self.buffer[self.current_position]
 
 
     # return True if we are at the end of the buffer
     def at_end(self) -> bool:
-        return True if current_position >= len(buffer) else False
+        return True if self.current_position >= len(self.buffer) - 1 else False
     
 
     def scan_tokens(self) -> Token:
 
-        while 1:
+        while self.at_end() is False:
             # advance our position in the buffer, and get the next character
-            c: str = advance()
+            c: str = self.advance()
+            print(self.line)
 
             if c == "\n":
                 self.line += 1
@@ -60,88 +63,89 @@ class Lexer:
 
             # match char pattern
             if c == "(":
-                add_token(TokenType.LEFT_PARAN, "(", None, self.line)
+                self.add_token(TokenType.LEFT_PARAN, "(", self.line, None)
                 continue
 
             if c == ")":
-                add_token(TokenType.RIGHT_PARAN, ")", None, self.line)
+                self.add_token(TokenType.RIGHT_PARAN, ")", self.line, None)
                 continue
 
             if c == "[":
-                add_token(TokenType.LEFT_BRACKET, "[", None, self.line)
+                self.add_token(TokenType.LEFT_BRACKET, "[", self.line, None)
                 continue
 
             if c == "]":
-                add_token(TokenType.RIGHT_BRACKET, "]", None, self.line)
+                self.add_token(TokenType.RIGHT_BRACKET, "]", self.line, None)
                 continue
 
             if c == "{":
-                add_token(TokenType.LEFT_BRACE, "{", None, self.line)
+                self.add_token(TokenType.LEFT_BRACE, "{", self.line, None)
                 continue
 
             if c == "}":
-                add_token(TokenType.RIGHT_BRACE, "}", None, self.line)
+                self.add_token(TokenType.RIGHT_BRACE, "}", self.line, None)
                 continue
 
             if c == ",":
-                add_token(TokenType.COMMA, ",", None, self.line)
+                self.add_token(TokenType.COMMA, ",", self.line, None)
                 continue
 
             if c == "\\":
-                add_token(TokenType.BSLASH, "\\", None, self.line)
+                self.add_token(TokenType.BSLASH, "\\", self.line, None)
                 continue
 
             if c == ".":
-                add_token(TokenType.STOP, ".", None, self.line)
+                self.add_token(TokenType.STOP, ".", self.line, None)
                 continue
 
             if c == "-":
-                add_token(TokenType.MINUS, "-", None, self.line)
+                self.add_token(TokenType.MINUS, "-", self.line, None)
                 continue
 
             if c == "+":
-                add_token(TokenType.PLUS, "+", None, self.line)
+                self.add_token(TokenType.PLUS, "+", self.line, None)
                 continue
 
             if c == ";":
-                add_token(TokenType.SEMICOLON, ";", self.line)
+                self.add_token(TokenType.SEMICOLON, ";", self.line)
                 continue
 
             if c == "/":
-                add_token(TokenType.FSLASH, "/", None, self.line)
+                self.add_token(TokenType.FSLASH, "/", self.line, None)
                 continue
 
             if c == "*":
-                add_token(TokenType.STAR, "*", None, self.line)
+                self.add_token(TokenType.STAR, "*", self.line, None)
                 continue
 
             if c == "!":
-                add_token(TokenType.BANG, "!", None, self.line)
+                self.add_token(TokenType.BANG, "!", self.line, None)
                 continue
 
             if c == "=":
-                add_token(TokenType.EQUAL, "=", None, self.line)
+                self.add_token(TokenType.EQUAL, "=", self.line, None)
                 continue
 
             if c == ">":
-                add_token(TokenType.GREATER, ">", None, self.line)
+                self.add_token(TokenType.GREATER, ">", self.line, None)
                 continue
 
             if c == "<":
-                add_token(TokenType.LESSER, "<", None, self.line)
+                self.add_token(TokenType.LESSER, "<", self.line, None)
                 continue
+            
 
 
-    def add_token(self, token: Token) -> None:
-        if not isinstance(token, Token):
-            if isinstance(token, str):
-                pr_err(f"NOT A TOKEN {token}")
-                sys.exit(65)
-            else:
-                pr_err("COULD NOT FIGURE OUT WHAT THE FUCK THIS TOKEN IS")
-                sys.exit(65)
+    def add_token(self, _type, char, literal, line) -> None:
+        # if not isinstance(token, Token):
+        #     if isinstance(token, str):
+        #         pr_err(f"NOT A TOKEN {token}")
+        #         sys.exit(65)
+        #     else:
+        #         pr_err("COULD NOT FIGURE OUT WHAT THE FUCK THIS TOKEN IS")
+        #         sys.exit(65)
 
-        self.tokens.append(token)
+        self.tokens.append(Token(_type, char, literal, line))
 
     def had_error(self) -> bool:
         # return whether we had an error
