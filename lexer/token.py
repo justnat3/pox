@@ -50,10 +50,11 @@ class TokenType(Enum):
     # <
     LESSER = 60,
     # <=
-    LESSER_EQAL = 6061,
+    LESSER_EQUAL = 6061,
 
     # blanket
     IDENTIFER = 14,
+    RESERVED = 94582,
 
     # Data Types
 
@@ -67,7 +68,7 @@ class TokenType(Enum):
     
     # Keywords / Reserved Words
     AND = 700,
-    _OR = 994,
+    OR = 994,
     CLASS = 98755,
     FUNCTION = 279651,
     FOR = 214,
@@ -78,7 +79,7 @@ class TokenType(Enum):
     RETURN = 41674,
     SUPER = 57214,
     THIS = 6455,
-    LET = 816,
+    IDENT = 816,
     WHILE = 94581,
 
     EOF = 9112,
@@ -93,4 +94,4 @@ class Token:
     literal: object = field(default = None)
 
     def __str__(self):
-        return f"[ {self.line} ] {self._type} : {self.lexeme} :" 
+        return f"[ {self.line} ] {self._type} : {self.lexeme} ;" 

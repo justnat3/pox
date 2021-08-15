@@ -76,7 +76,7 @@ def run(line: str) -> str:
 
     # handle empty input
     if not line == "":
-        print(line)
+        pass
 
     lex = Lexer(line)
 
