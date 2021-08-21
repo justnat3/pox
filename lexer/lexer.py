@@ -79,6 +79,11 @@ class Lexer:
         # return the next char
         return self.buffer[self.current_position]
 
+    def reverse(self) -> None:
+        # reverse the lexer cursor
+        self.current_position -= 1
+        self.current_char = self.buffer[self.current_position]
+
     def peek(self) -> NextChar:
         # peek the next char without advancing the lexer's current position
         try:
@@ -94,7 +99,17 @@ class Lexer:
 
     # return True if we are at the end of the buffer
     def at_end(self) -> bool:
-        return True if self.current_position == len(self.buffer) - 1 else False
+
+        if self.current_position == len(self.buffer):
+
+            # add the EOF token for the parser later on
+            self.add_token(TokenType.EOF, "", self.line, None)
+
+            return True
+
+        else:
+
+            return False
 
     def scan_tokens(self) -> Token:
         # scan the tokens entil we reach a EOF
@@ -237,16 +252,23 @@ class Lexer:
     def identifier(self, c: str) -> TokenType:
         str_: str = ""
 
+        forbidden_chars = ['[',']', '{', '}', '(', ')', '-', '+', '=', '*', '&', '^', '%', "$", '#', '@', '!', '<', '>', '?', ',', '.' '/', '\\', '|', ':', ';']
+
         # consume the first char
         str_ += self.current_char
 
         while self.at_end() is False:
 
+            # we want to be able to identify function calls here
+            # we also don't want to reverse() because it would not only hang the lexer
+            # it would slow everything down having to change the lexer state
+            if self.peek() in forbidden_chars: break
+
             # this should advance us to the first char in the string & so on
             c: str = self.advance()
 
-            if self.is_whitespace(self.current_char):
-                break
+            # we care about whitespace, otherwise everything is an identifier
+            if self.is_whitespace(self.current_char): break
 
             if self.is_whitespace(self.peek()):
                 str_ += self.current_char
