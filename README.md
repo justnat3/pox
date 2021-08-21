@@ -1,10 +1,8 @@
-# PookiPy ## Purpose
-This is just a simple general purpose programming langauge based off of the Lox programming language described in the "crafting interpreters" book.
+# PookiPy 
 
-## Syntax
+## Where I am at
 
-This looks like lox
+I'm working on the parser
 
-## Examples
-
-None so far
+## Purpose
+This is just a simple general purpose programming langauge.
