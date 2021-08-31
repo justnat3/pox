@@ -6,21 +6,21 @@ class AstPrinter:
         ...
 
     def visitBinaryExpr(self, expr: Expression) -> str:
-        return parenthesize(
+        return self.parenthesize(
             expr.operator.lexeme, expr.left, expr.right
             )
 
     def visitGroupingExpr(self) -> str:
-        return parenthesize("group", expr.expression)
+        return self.parenthesize("group", expr.expression)
 
     def visitLiteralExpr(self) -> str:
         if (expr.value == None): return "nil"
         return str(expr.value)
 
     def visitUnaryExpr(self) -> str:
-        return parenthesize(expr.operator.lexeme, expr.right)
+        return self.parenthesize(expr.operator.lexeme, expr.right)
 
-    def parenthesize(self, *exprs) -> str:
+    def parenthesize(self, name, *exprs) -> str:
         string = f"({name}"
 
         for expr in exprs:
