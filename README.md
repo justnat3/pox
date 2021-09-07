@@ -1,9 +1,9 @@
-# PookiPy 
+# Pox
 
 ## Purpose
-This is just a simple general purpose programming langauge.
 
-## Where I am at
+This is to learn more about programming languages. This is an implmentation of Lox from [Crafting Interpreters](http://craftinginterpreters.com/)
 
-I'm working on the parser
 
+## Where are we in the process?
+We are current at Evaluation & some code cleanup.
