@@ -16,9 +16,9 @@ import sys
 import os
 
 # program defined imports
-from utils.utils import pr_err
-from lexer.token import Token
-from lexer.lexer import Lexer
+from utils import pr_err
+from tok import Token
+from lexer import Lexer
 
 class TokenList: ...
 
@@ -61,7 +61,7 @@ class Path:
 def run_file(file: str) -> list:
 
     # ensuer path safety
-    s_file = str( Path( os.path.abspath(file) ) ) 
+    s_file = str( Path( os.path.abspath(file) ) )
 
     # intialize our file buffer
     s_buff = create_source_buffer(s_file)
@@ -88,7 +88,7 @@ def run(line: str) -> str:
 def run_prompt():
     # try to catch keyboard interrupts
     try:
-        
+
         print(f"\npookipy Version: {__version__}")
 
         while 1:

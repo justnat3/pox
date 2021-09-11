@@ -1,7 +1,6 @@
-#from src.lexer.token import Token, TokenType
+from expr import Expression, Unary
 from dataclasses import dataclass
-from lexer import token
-from parser.expr import Expression, Unary
+from tok import Token, TokenType
 
 class ParserError(Exception):
     def __init__(self, token, message):
@@ -21,30 +20,30 @@ class Parser:
             self.report(tok.line, " at end", message)
         else:
             self.report(tok.line, " at '" + tok.lexeme + "'", message)
-        
+
     def report(line: int, st: str, message: str) -> None:
         print(line, st, message)
 
 
     def __post_init__(self):
         # init parser fields
-        self.current_position = 0 
+        self.current_position = 0
         self.tokens = []
 
     def advance(self):
         if not self.is_end():
             self.current_position += 1
         return self.previous()
-    
+
     def at_end(self):
-        return self.peek()._type == TokenType.EOF    
-    
+        return self.peek()._type == TokenType.EOF
+
     def peek(self):
         self.tokens[self.current_position]
-    
-    def previous(self):            
+
+    def previous(self):
         self.tokens[self.current_position - 1]
-            
+
     def match(self, *types) -> bool:
         for typ_ in types:
             if (self.check(typ_)):
@@ -68,7 +67,7 @@ class Parser:
             expr = expr.Binary(expr, operator, right)
 
         return expr
-    
+
     def comparision(self):
         expr = self.term()
 
@@ -99,7 +98,7 @@ class Parser:
             right = self.unary()
             expr = expr.Binary(expr, operator, right)
         return expr
-    
+
     def unary(self):
         if (self.match('!', "-")):
             operator = self.previous()
@@ -129,9 +128,9 @@ class Parser:
     def consume(self, typ_: str, mesg: str):
         if (self.check(typ_)):
             return self.advance()
-        
+
         self.error(self.peek(), mesg)
-    
+
     def synchronize(self) -> None:
         while not self.at_end():
             if (self.previous()._type == TokenType.SEMICOLON):
@@ -153,7 +152,7 @@ class Parser:
                 return
             if self.peek()._type is TokenType.RETURN:
                 return
-    
+
             self.advance()
 
     def parse(self) -> None:

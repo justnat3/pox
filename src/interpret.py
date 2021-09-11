@@ -1,13 +1,13 @@
 from dataclasses import dataclass
-from lexer.token import TokenType
-from parser.expr import Binary, Expression, Grouping, Unary
+from tok import TokenType
+from expr import Binary, Expression, Grouping, Unary
 
 @dataclass
 class Interpreter:
 
     def visitGroupingExpr(self, expr: Grouping) -> object:
         return self.evaluate(expr.expression)
-    
+
     def visitBinaryExpr(self, expr: Binary) -> object:
         left: object = self.evaluate(expr.left)
         right: object = self.evaluate(expr.right)
@@ -41,7 +41,7 @@ class Interpreter:
 
         # unreachable
         return None
-    
+
     def is_equal(a: object, b: object) -> bool:
         if a is None and b is None: return True
         if a is None: return False
@@ -55,7 +55,7 @@ class Interpreter:
             return -right
         if expr.operator._type is TokenType.BANG:
             return not self.isTruthy(right)
-        
+
         # unreachable
         return None
 

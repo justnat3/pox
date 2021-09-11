@@ -1,5 +1,5 @@
 import expr
-from lexer.token import Token, TokenType
+from tok import Token, TokenType
 
 class AstPrinter:
     def printast() -> str:

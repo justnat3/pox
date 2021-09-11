@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
-from utils.utils import pr_err
-from .token import Token, TokenType
+from utils import pr_err
+from tok import Token, TokenType
 import sys
 
 

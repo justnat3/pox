@@ -2,7 +2,7 @@ import sys
 
 # Handling Error strings
 def pr_err(err: str) -> None:
-    
+
     # make sure that what we are sticking in is a string
     if not isinstance(err, str):
         err = str(err)
